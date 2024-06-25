@@ -79,3 +79,14 @@ C
             // conflict create 
                 A code , C code 
     // push online origin 
+
+
+git init 
+git remote add origin 
+
+
+git add .
+git commit -m "Commit message" 
+
+git push origin main/master
+git pull origin main/master/branch
