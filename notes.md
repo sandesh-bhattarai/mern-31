@@ -90,3 +90,11 @@ git commit -m "Commit message"
 
 git push origin main/master
 git pull origin main/master/branch
+---------------------- From main Branch Ends here --------------------------
+---------------------- From Sandesh branch starts here ---------------------
+git checkout -b branchName
+
+git status 
+
+git branch 
+---------------------- From Sandesh branch ends here ----------------------
