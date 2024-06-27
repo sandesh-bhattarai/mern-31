@@ -134,6 +134,8 @@ const household = [
         consumedUnits: 250
     }
 ]
+
+
 // Rates: 
 // for the fist 20 units, a lumpsum amount of NPR. 80 has to be paid
 // for the next 20 units the rate is Npr. 5/unit
@@ -141,3 +143,31 @@ const household = [
 // for the next 50 units, the rate is Npr. 10/unit
 // for the next 100 units, the rate is Npr. 15/unit
 // any units above this, the rate is Npr. 20/unit
+function getBillAmount(unitConsumed) {
+  let toBePaid = 0;
+  if(unitConsumed <= 20) {
+    toBePaid =80
+  } else if(unitConsumed <= 40) {
+    toBePaid  = 80 + (unitConsumed - 20) * 5
+  } else if(unitConsumed <= 70){
+    toBePaid = 80 + 20 * 5 + (unitConsumed - 40) * 7
+  } else if(unitConsumed <= 120) {
+    toBePaid = 80 + 20 *5 + 30 * 7 + (unitConsumed- 70) * 10
+  } else if(unitConsumed <= 220) {
+    toBePaid = 80 + 20 *5 + 30 * 7 + 50 * 10 + (unitConsumed - 120) * 15
+  } else {
+    toBePaid = 80 + 20 *5 + 30 * 7 + 50 * 10 + 100 * 15 + (unitConsumed - 220) * 20;
+  }
+  return toBePaid;
+}
+
+function printData(userInfo) {
+  console.log("Household Name: ", userInfo.name)
+  console.log("Units Consumed: ", userInfo.consumedUnits)
+  console.log("Amount to be Paid: Npr.", userInfo.billAmount)
+}
+
+for(let owner of household) {
+    owner['billAmount'] = getBillAmount(owner.consumedUnits);
+    printData(owner);
+}
