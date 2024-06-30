@@ -101,7 +101,8 @@ function printStudent(std) {
     console.log("---------------------------")
 } 
 
-for(let student of students) {
+// for(let student of students) {
+students.map((student) => {
 
     const per = getPercentage(student.marksObt)
     student['percentage'] = per;
@@ -111,8 +112,7 @@ for(let student of students) {
 
     // student data pring 
     printStudent(student)
-}
-
+  })
 
 // Create a js functionn to calculate household electricity consumpiton amount based on
 // following. 
@@ -167,7 +167,8 @@ function printData(userInfo) {
   console.log("Amount to be Paid: Npr.", userInfo.billAmount)
 }
 
-for(let owner of household) {
+// for(let owner of household) {
+household.map((owner) => {
     owner['billAmount'] = getBillAmount(owner.consumedUnits);
     printData(owner);
-}
+  })
