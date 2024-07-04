@@ -100,3 +100,52 @@ git branch
 ---------------------- From Sandesh branch ends here ----------------------
 
 
+
+# 4 pillars of OOP
+- Abstraction
+    - Abstract => 
+- Encapsulation 
+    - Capsule 
+    - access modifiers, 
+        public, private, protected
+- Inheritance 
+    - inherit
+        - overloading, overriding 
+- Polymorphism
+    - multiple-form 
+
+    class 
+        Lab-8
+
+
+    Department 
+        - student 
+
+
+        Managemtne 
+            - Commerce 
+        
+        Managmente 
+            - teacher 
+
+
+    id      relationId      table       rel2     table 2
+    -------------------------------------------------
+    1           1           User        2       Group
+    2           2           Group       3       Department
+
+
+    const first = {
+        id: 1, 
+        relationId: 1, 
+        table: {User class},
+        rel2: 2,
+        table2: {Group coll}
+    }
+
+
+
+Library, Framewrok 
+    - OOP 
+        - Modular 
+            - MVC Pattern 

@@ -81,8 +81,8 @@ console.log(numb1)
 // one is of odd numbers 
 // another is of even number
 
-const oddNumbs = []
-const evenNumbs = []
+let oddNumbs = []
+let evenNumbs = []
 
 numb.forEach((val, ind) => {
     if(val % 2 === 0) {
@@ -93,6 +93,30 @@ numb.forEach((val, ind) => {
     // return undefined 
 })
 
+evenNumbs = numb.filter((val, ind) => val % 2 === 0)
+oddNumbs = numb.filter((val, ind) => val % 2 !== 0)
+
 console.log(oddNumbs)       // [1,3,5,7,9]
 console.log(evenNumbs)      // [2,4,6,8,10]
 
+
+// ecommerce => 100 product 
+// 40 products discount 
+// 
+
+
+const numbList = [1,2,3,4,5,6,7,8,9,10]
+
+// loop => present, past 
+const result = numbList.reduce((sum, currv) => {
+    console.log(sum, currv)
+    sum += currv
+    // return sum;
+    // sum = currv;
+    return sum
+})
+
+console.log(result)
+
+// .every
+// .some
