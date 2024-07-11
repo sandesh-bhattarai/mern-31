@@ -149,3 +149,30 @@ Library, Framewrok
     - OOP 
         - Modular 
             - MVC Pattern 
+
+
+
+1.0.0.
+
+x.x.x 
+x => Upgrade 
+x => Update 
+x => Patch
+
+
+Upgrade => 
+
+Chat application
+    => Text based chat 
+        1.0.0
+        => Title => tittle -> Title? release => 
+            1.0.1
+            -> 1.0.X
+        => Text chat Emoji in our keyboard => 
+            1.1.0
+                => 1.1.1
+    => Audio call integration 
+        => 2.0.0
+            => 2.0.1
+        => 2.1.0
+    => 3.0.0
