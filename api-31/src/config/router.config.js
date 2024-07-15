@@ -1,28 +1,16 @@
-const express = require('express')
-const app = express()
+const router = require('express').Router()
+const authRouter = require('../modules/auth/auth.router')
 
-// router 
-    // /api/v1
-
-    // http://localhost:9005/api/v1/health
-app.get("/health", (req, res) => {
+// http://localhost:9005/api/v1/health
+router.use("/health", (req, res) => {
     res.end("This is healthcheck url")
 })
 
-
-app.get('/course/:slug' , (req, res) => {
-    const params = req.params;      // object data 
-    const query = req.query;
-
-    res.json({
-        slug: params.slug,
-        query: query
-    })
-})
+router.use('/auth', authRouter)
 
 // http://localhost:9005/api/v1/
-app.use("/", (request, response) => {
+router.use("/", (request, response) => {
     response.end("Hello world")
 })
 
-module.exports = app;
+module.exports = router;
