@@ -1,27 +1,15 @@
 const Joi = require("joi")
 
 class AuthController {
-    register = (req, res, next) => {
-        // name, email, password, phone, addres, role
-        const data = req.body   // parser
-        
-        const registerDTO = Joi.object({
-            name: Joi.string().min(2).max(50).required(),
-            email: Joi.string().email().required(),
-            password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/).required(),
-            confirmPassword: Joi.string().equal(Joi.ref('password')).required(),
-            phone: Joi.string(),
-            address: Joi.string(),
-            role: Joi.string().regex(/^(customer|seller)$/)
-        });
-            // 2 way 
-            // sync 
-            // async 
-        const response = registerDTO.validate(data,{abortEarly: false})
-        console.log(response);
-        // valid => response =:> dataa 
-        // invlaid => response => {error: [{}]}
-        // success call 
+    register = async (req, res, next) => {
+        try{
+            // name, email, password, phone, addres, role
+            const data = req.body   // parser
+            
+        } catch(exception) {
+            // handling
+            
+        }
     }
 
     getLoggedInUser =(req, res, next) => {
