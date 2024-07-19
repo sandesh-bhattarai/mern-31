@@ -103,3 +103,72 @@ CRUD => create, read, update, delete
         - middlewares/
         
 ==== Nest js 
+
+## Class Work
+-> Setup a  new/fresh express project. 
+-> Create a modular route for some request.
+Steps: 
+a. Create a directory at any location you want.
+b. Initialize the proejct with 
+    ```npm init -y``` 
+c. Install packages using 
+    ```npm i express```
+d. Create a file ```index.js``` at your root location
+e. Install nodemon as global package, only if not installed previously
+    ```npm i nodemon -g```
+f. modify your ```package.json``` with the following in  script: 
+    ``` {```
+    ```    ...,```
+    ``` "script": { ```
+    ```        ..., ```
+    ```       "start": "nodemon ./index.js" ```
+    ```}```
+    ```}```
+g. Setup node server in your ```index.js```
+    ```const http = require("http");```
+    ```const server = http.createServer()```
+    ``` server.listen(9003, '127.0.0.1', (err) => { ```
+    ``` if(!err) { ``` 
+    ```     console.log("Server is running on port 9003")```
+    ```     console.log("Press Ctrl+c to end server execution")```
+    ```}```
+    ```})```
+h. Start your server 
+    ``` npm start ``` 
+    You should get some oputput like: 
+    ``` Server is running on port 9003 ```
+    ``` Press Ctrl+c to end server execution ```
+
+# Setting express Application 
+1. create a folder ``` src ``` in your project root directory
+2. create a folder ``` config ``` inside ``` src ``` directory 
+3. Create ``` express.config.js ``` file inside ```/src/config```
+4. setup Express application in ``` express.config.js ```: 
+``` const express = require("express");```
+``` const app = express(); ```
+``` module.exports = app; ```
+5. import ```app``` in your ```index.js```. 
+    ```./index.js```
+    ```const http = require("http")```
+    ``` const app = require("./config/express.config")```
+6. load ``` app``` in your server 
+    ``` ./index.js```
+    ``` const server = http.createServer(app);```
+7. reload your server and run ``` http://localhost:9003``` in your postman. 
+
+# create a route for testing 
+1. In your ``` express.config.js ``` file add below ``` const app = express()```
+    ```app.use('/health', (req, res, next) => { ```
+        ```res.json({```
+            ```result: "I am inside healthcheck",```
+            ```meta: null,```
+            ``` message: "Server run success",```
+            ```status: "SERVER_IS_RUNNING"```
+        ```})```
+    ```})```
+2. Check the url ```http://localhost:9003/health``` in your postman
+
+### HW 
+====> you should be able to take some json content as a request body
+===> Validate the data and throw some exception if invalid data are there 
+===> Upon validation success, send some json response to the client 

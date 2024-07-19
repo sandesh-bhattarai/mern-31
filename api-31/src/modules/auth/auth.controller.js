@@ -5,6 +5,11 @@ class AuthController {
         try{
             // name, email, password, phone, addres, role
             const data = req.body   // parser
+            // single imag e
+            // req.file
+            //files array 
+            // req.files
+            // file => attach data var
             
         } catch(exception) {
             // handling
