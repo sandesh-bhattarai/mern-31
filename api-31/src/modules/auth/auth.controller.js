@@ -1,4 +1,5 @@
 const Joi = require("joi")
+const { uploadHelper } = require("../../utilities/helpers")
 
 class AuthController {
     register = async (req, res, next) => {
@@ -6,6 +7,10 @@ class AuthController {
             // name, email, password, phone, addres, role
             const data = req.body   // parser
             // single imag e
+            if(req.file) {
+                const uploadFile = await uploadHelper(req.file)
+                console.log(uploadFile)
+            }
             // req.file
             //files array 
             // req.files
@@ -13,7 +18,7 @@ class AuthController {
             
         } catch(exception) {
             // handling
-            
+            console.log("I am here ",exception)
         }
     }
 
