@@ -6,13 +6,9 @@ const {registerDTO, loginDTO} = require("./auth.contract")
 
 // config uploader  => file upload 
 const {setPath, uploader}  = require("../../middleware/uploader.middleware");
-const { tmpUpload } = require("../../config/cloudinary.config");
 
 
-authRouter.post('/register',
-    // setPath('seller/'), uploader.single('image'), 
-    tmpUpload.single("image"),
-    bodyValidator(registerDTO), authCtrl.register)
+authRouter.post('/register', setPath('user/'), uploader.single('image'),  bodyValidator(registerDTO), authCtrl.register)
 
 authRouter.get("/me", authCtrl.getLoggedInUser)
 authRouter.get('/activate/:token', authCtrl.activateRegisteredUser);

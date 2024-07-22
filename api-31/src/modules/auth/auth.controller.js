@@ -1,5 +1,5 @@
-const Joi = require("joi")
-const { uploadHelper } = require("../../utilities/helpers")
+const { fileDelete, uploadHelper } = require("../../utilities/helpers")
+const bcrypt = require("bcryptjs");
 
 class AuthController {
     register = async (req, res, next) => {
@@ -8,16 +8,27 @@ class AuthController {
             const data = req.body   // parser
             // single imag e
             if(req.file) {
-                const uploadFile = await uploadHelper(req.file)
-                console.log(uploadFile)
+                data.image = await uploadHelper(req.file.path);
             }
-            // req.file
-            //files array 
-            // req.files
-            // file => attach data var
-            
+
+            // bcrypt => user - createdtime, server, salt, hash func
+            var salt = bcrypt.genSaltSync(10);
+            data.password = bcrypt.hashSync(data.password, salt);     // encode
+            data.salt = salt
+
+            /// db operation 
+            // activate link email 
+            res.json({
+                result: data, 
+                meta: null, 
+                message: "Your account has been registered succesfully.",
+                stauts: "REGISTER_SUCCESS"
+            })
         } catch(exception) {
             // handling
+            if(req.file) {
+                fileDelete(req.file.path)
+            }
             console.log("I am here ",exception)
         }
     }

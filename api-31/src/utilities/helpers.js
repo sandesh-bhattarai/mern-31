@@ -1,28 +1,27 @@
 const { cloudinary } = require("../config/cloudinary.config")
+const fs = require('fs');
 
-const uploadHelper = async (file) => {
+const uploadHelper = async (filepath, folder="mern-31") => {
     try {
-        console.log(cloudinary)
-        const promise = new Promise((resolve, reject) => {
-            cloudinary.uploader.upload_stream({
-                resource_type:"auto"
-            }, (error, result) => {
-                if(error) {
-                    reject(error);
-                } else {
-                    resolve(result.url)
-                }
-            })
-        })
-        const resolve = await Promise.allSettled([promise])
-        console.log(resolve);
-        return resolve;
+        console.log(filepath)
+        const uploadedFile = await cloudinary.uploader.upload(filepath, {resource_type: "auto", folder: folder})   
+        // delete image 
+        fileDelete(filepath)
+        return uploadedFile.secure_url;
     } catch(exception) {
-        console.log("exception")
-        throw exception
+        console.log(exception)
+        throw {code: 400, message: "File cannot be uploaded at this moment."}
+    }
+}
+
+
+const fileDelete = (path) => {
+    if(fs.existsSync(path)) {
+        fs.unlinkSync(path);
     }
 }
 
 module.exports = {
-    uploadHelper
+    uploadHelper,
+    fileDelete
 }
