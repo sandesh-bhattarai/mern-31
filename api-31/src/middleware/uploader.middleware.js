@@ -24,7 +24,19 @@ const myStorage = multer.diskStorage({
 })
 
 const uploader = multer({
-    storage: myStorage
+    storage: myStorage,
+    fileFilter: (req, file, cb)=> {
+        const ext = file.originalname.split('.').pop(); // JPG
+        // image 
+        if(['jpg','jpeg','png','svg', 'webp', 'bmp', 'gif'].includes(ext.toLowerCase())) {
+            cb(null, true)
+        } else {
+            cb({detail: {image:"File format not supported"}, status: 400, message: "Validation Failed"}, false);
+        }
+    },
+    limits: {
+        fileSize: 3000000
+    }
     // storage: multer.memoryStorage
 });
 

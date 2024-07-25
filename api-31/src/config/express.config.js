@@ -10,6 +10,11 @@ app.use(express.urlencoded({
     extended: false
 }))
 
+// http://localhost:9005/assets/
+// public/
+app.use("/assets", express.static('./public/'))
+app.use("/images", express.static("./public/uploads/"))
+
 
 // mount router to app 
 app.use("/api/v1", router)

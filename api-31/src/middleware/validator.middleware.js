@@ -1,7 +1,14 @@
-const bodyValidator = (schema) => {
+const bodyValidator = (schema, filepath=null) => {
     return async (req, res, next) => {
         try{
             const data = req.body;
+            // 
+            if(req.file) {
+                const fieldname = req.file.fieldname;
+                data[fieldname] = process.env.IMGES_URL+filepath + req.file.filename
+            } else if(req.files) {
+                //[{}]
+            }
             const response = await schema.validateAsync(data, {abortEarly: false})
             next();
         } catch(exception) {

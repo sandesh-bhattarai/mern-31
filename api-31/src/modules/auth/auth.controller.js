@@ -1,12 +1,10 @@
-const { fileDelete, uploadHelper } = require("../../utilities/helpers")
+const { fileDelete, uploadHelper, randomStringGenerator } = require("../../utilities/helpers")
 const bcrypt = require("bcryptjs");
 
 class AuthController {
     register = async (req, res, next) => {
         try{
-            // name, email, password, phone, addres, role
             const data = req.body   // parser
-            // single imag e
             if(req.file) {
                 data.image = await uploadHelper(req.file.path);
             }
@@ -17,7 +15,15 @@ class AuthController {
             data.salt = salt
 
             /// db operation 
+            // const otp = Math.ceil(Math.random() * 999)       // 0-1
             // activate link email 
+            data.activationToken = randomStringGenerator(100);
+            data.tokenExpires = new Date(Date.now() + (60*60*3*1000))
+
+            // email smtp => sending domain 
+            // real email => SD verification 
+            // fake smtp 
+
             res.json({
                 result: data, 
                 meta: null, 

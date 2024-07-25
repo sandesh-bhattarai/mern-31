@@ -8,7 +8,7 @@ const {registerDTO, loginDTO} = require("./auth.contract")
 const {setPath, uploader}  = require("../../middleware/uploader.middleware");
 
 
-authRouter.post('/register', setPath('user/'), uploader.single('image'),  bodyValidator(registerDTO), authCtrl.register)
+authRouter.post('/register', setPath('user/'), uploader.single('image'),  bodyValidator(registerDTO, '/images/user/'), authCtrl.register)
 
 authRouter.get("/me", authCtrl.getLoggedInUser)
 authRouter.get('/activate/:token', authCtrl.activateRegisteredUser);
