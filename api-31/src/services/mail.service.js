@@ -7,7 +7,7 @@ class MailService {
         try {
             let connectionOps ={
                 host: process.env.SMTP_HOST, 
-                port:  process.env.SMTP_POST, 
+                port:  process.env.SMTP_PORT, 
                 auth: {
                     user:  process.env.SMTP_USER, 
                     pass:  process.env.SMTP_PASSWORD
@@ -19,6 +19,7 @@ class MailService {
                     service: 'gmail'
                 }
             }
+            console.log(connectionOps)
             this.transport = nodemailer.createTransport(connectionOps)
             console.log("Email Server connected successfully.")
         } catch(exception) {
@@ -28,11 +29,26 @@ class MailService {
     }
 
     // TODO: Define email send operation
-    mailSend = ({to, sub, message})=> {
+    mailSend = async ({to, sub, message})=> {
         try{
             // 
+            const response = await this.transport.sendMail({
+                to: to,
+                from: process.env.SMTP_FROM,
+                // cc: "",
+                // bcc: "", 
+                // attachments: ["/Voumes/Data/codes/mern-31/api-31/public/uploads/user/1721272117260-205.svg"],
+                subject: sub, 
+                // text: "",
+                // // <p>text</p>
+                html: message
+            })
+            console.log(response)
+            return ;
         } catch(exception) {
             //
+            console.log(exception)
+            throw {message: "Error sending email", detail: exception, status: "EMAIL_SENDING_ERROR"}
         }
     }
 }
