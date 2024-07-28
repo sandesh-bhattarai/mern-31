@@ -1,13 +1,14 @@
 const mailsvc = require("../../services/mail.service");
 const { fileDelete, uploadHelper, randomStringGenerator } = require("../../utilities/helpers")
 const bcrypt = require("bcryptjs");
+const {myEvent, EventName} = require("../../middleware/events.middleware");
 
 class AuthController {
     register = async (req, res, next) => {
         try{
             const data = req.body   // parser
             if(req.file) {
-                data.image = await uploadHelper(req.file.path);
+                data.image = await uploadHelper(req.file.path, data.role);
             }
 
             // bcrypt => user - createdtime, server, salt, hash func
@@ -20,34 +21,9 @@ class AuthController {
             // activate link email 
             data.activationToken = randomStringGenerator(100);
             data.tokenExpires = new Date(Date.now() + (60*60*3*1000))
-            
-            // email smtp => sending domain 
-            // real email => SD verification 
-            // Events 
-            // REPL 
-                // 
+        
 
-            // notify 
-            // events
-            // cronjobs
-            // socket 
-            await mailsvc.mailSend({
-                to: data.email, 
-                sub: "Activate your account!",
-                message: `
-                Dear ${data.name}, <br/>
-                <p>Your account has been successfully created. Please click the link below or copy paste the url to activate your account: </p>
-                <a href="${process.env.FRONTEND_URL}/activate/${data.activationToken}">
-                    ${process.env.FRONTEND_URL}/activate/${data.activationToken}
-                </a>
-                <br/>
-                <p><strong>Note: </strong>Please do not reply to this email</p>
-
-                <p>Regards,</p>
-                <p>System Administration,</p>
-                <p>${process.env.SMTP_FROM}</p>
-                `
-            })
+            myEvent.emit(EventName.REGISTER_EMAIL, {name: data.name, email: data.email, token: data.activationToken})
 
             res.json({
                 result: data, 
@@ -60,7 +36,8 @@ class AuthController {
             if(req.file) {
                 fileDelete(req.file.path)
             }
-            console.log("I am here ",exception)
+            next(exception);
+            
         }
     }
 

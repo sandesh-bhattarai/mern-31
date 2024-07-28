@@ -24,7 +24,7 @@ class MailService {
             console.log("Email Server connected successfully.")
         } catch(exception) {
             console.log("Error connecting email server... ", exception)
-            throw exception;
+            throw {message: "Error connecting email Server", detail: exception, status: "SMTP_CONNECTION_ERROR"};
         }
     }
 

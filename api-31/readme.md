@@ -229,3 +229,12 @@ h. Start your server
 
 // Hw/cw
 ## Setup a git repo, and assign collaborator to me - @sandesh-bhattarai
+
+
+# Selection of the db 
+a. Client 
+    - mongodb cloud atlas
+    - nosql 
+    - non-relational dbms
+    
+mongodb uses json format

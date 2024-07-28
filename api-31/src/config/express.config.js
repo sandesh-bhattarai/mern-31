@@ -1,7 +1,11 @@
 require("dotenv").config();
 const express = require('express');
-const router = require("./router.config")
+const router = require("./router.config");
+const { MulterError } = require("multer");
+
 const app = express()
+
+// event middleware
 
 
 // json parsers 
@@ -35,6 +39,13 @@ app.use((error, req, res, next) => {
     let status = error.status || "INTERNAL_SERVER_ERROR";
 
     let code = error.code || 500;
+
+    if(error instanceof MulterError) {
+        code = 400;
+        message = "Validtion Failed",
+        // TODO: Detect
+        result = {"image": "File size too large"}
+    }
 
     res.status(code).json({
         result: result, 
