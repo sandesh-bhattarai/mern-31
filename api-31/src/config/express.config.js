@@ -1,5 +1,8 @@
 require("dotenv").config();
 const express = require('express');
+
+require("./db.config");
+
 const router = require("./router.config");
 const { MulterError } = require("multer");
 
@@ -45,6 +48,19 @@ app.use((error, req, res, next) => {
         message = "Validtion Failed",
         // TODO: Detect
         result = {"image": "File size too large"}
+    }
+
+
+    // only for unique validation failed fields
+    if(+error.code === 11000) {
+        code =  400;
+        message = "Validation Failed";
+        // field 
+        let msgs = {};
+        Object.keys(error.keyPattern).map((field) => {
+            msgs[field] = field+" should be unique";
+        })
+        result = msgs
     }
 
     res.status(code).json({

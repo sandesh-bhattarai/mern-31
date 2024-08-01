@@ -1,28 +1,13 @@
-const mailsvc = require("../../services/mail.service");
-const { fileDelete, uploadHelper, randomStringGenerator } = require("../../utilities/helpers")
-const bcrypt = require("bcryptjs");
+const { fileDelete } = require("../../utilities/helpers")
 const {myEvent, EventName} = require("../../middleware/events.middleware");
+const authSvc = require("./auth.service");
 
 class AuthController {
+    // 
     register = async (req, res, next) => {
         try{
-            const data = req.body   // parser
-            if(req.file) {
-                data.image = await uploadHelper(req.file.path, data.role);
-            }
-
-            // bcrypt => user - createdtime, server, salt, hash func
-            var salt = bcrypt.genSaltSync(10);
-            data.password = bcrypt.hashSync(data.password, salt);     // encode
-            data.salt = salt
-
-            /// db operation 
-            // const otp = Math.ceil(Math.random() * 999)       // 0-1
-            // activate link email 
-            data.activationToken = randomStringGenerator(100);
-            data.tokenExpires = new Date(Date.now() + (60*60*3*1000))
-        
-
+            const data = await authSvc.transaformRegsiterUser(req);
+            await authSvc.registerUser(data);
             myEvent.emit(EventName.REGISTER_EMAIL, {name: data.name, email: data.email, token: data.activationToken})
 
             res.json({

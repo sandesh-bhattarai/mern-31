@@ -1,3 +1,5 @@
+Mongodb Pwd: 9Ml3WBEOuGK9ncRX
+
 # Server Side API Development 
 ## Framework 
 - Express js 
@@ -238,3 +240,74 @@ a. Client
     - non-relational dbms
     
 mongodb uses json format
+
+
+host        ===> localhost, atlas 
+port        ===> 27017
+protocol    ===> mongodb, mongodb+srv 
+username    ===> none, db acesss username
+password    ===> none, dbaccess password
+dbname      ===> project based
+
+
+mongodb://127.0.0.1:27017/
+dbname => test
+
+
+// users 
+    age: number 
+    ===> having age > 18
+    db.users.find({})
+
+    {age: 18}
+
+#### filter 
+## {key: value}   ===> key = 'value'
+
+## {$operation:{key: value}}   ===> key $operation "value"
+
+{$gt: {age: 18}} => age $gt 18 => age > 18 
+
+## {key: {$operation: value}} 
+
+[18,15, 19]
+{age: {$in: [18,15,19]}} => age in (18,15,19)
+
+$and, $or, $gt, $gte, $lt, $lte, $in, $nin, $eq, $ne
+
+(x or y) and (y or z)
+
+{
+    $and: [
+        {
+            $or: [
+                {x},
+                {y}
+            ]
+        },
+        {
+            $or: [
+                {y},
+                {z}
+            ]
+        }
+    ]
+}
+
+
+
+==> Active db 
+==> table/collections
+
+
+
+user, 
+customer 
+
+brand 
+    slug
+
+        facebook.com/username
+        
+category 
+product
