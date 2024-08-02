@@ -9,9 +9,11 @@ const {setPath, uploader}  = require("../../middleware/uploader.middleware");
 
 
 authRouter.post('/register', setPath('user/'), uploader.single('image'),  bodyValidator(registerDTO, '/images/user/'), authCtrl.register)
+authRouter.get('/activate/:token', authCtrl.activateRegisteredUser);
+authRouter.get('/re-send/activation/:token', authCtrl.resendToken)
 
 authRouter.get("/me", authCtrl.getLoggedInUser)
-authRouter.get('/activate/:token', authCtrl.activateRegisteredUser);
+
 authRouter.post('/login',bodyValidator(loginDTO), authCtrl.login)
 
 authRouter.delete('/logout', authCtrl.logout)

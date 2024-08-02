@@ -23,6 +23,29 @@ class AuthService {
             throw exception
         }
     }
+
+    getSingleUserByFilter  = async(filter) => {
+        try {
+            const user = await UserModel.findOne(filter);
+            if(!user) {
+                throw {code: 404, message: "User not found", status: "USER_NOT_FOUND" }
+            } else  {
+                return user;
+            }
+        } catch(exception) {
+            throw exception
+        }
+    }
+
+
+    updateUserById = async (id, data) => {
+        try {
+            const user = await UserModel.findByIdAndUpdate(id, {$set: data}, {new: true});
+            return user;
+        } catch(exception) {
+            throw exception
+        }
+    }
 }
 const authSvc = new AuthService()
 module.exports = authSvc;

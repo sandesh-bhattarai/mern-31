@@ -5,7 +5,9 @@ require("./db.config");
 
 const router = require("./router.config");
 const { MulterError } = require("multer");
+const runUserSeeders = require('../seeders/users.seeders');
 
+runUserSeeders()
 const app = express()
 
 // event middleware
