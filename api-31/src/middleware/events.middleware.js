@@ -4,7 +4,8 @@ const myEvent = new EventEmitter();
 const mailsvc = require("../services/mail.service")
 
 const EventName = {
-    REGISTER_EMAIL: "registerEmail"
+    REGISTER_EMAIL: "registerEmail", 
+    ACTIVATION_EMAIL: "accountActivatedEmail"
 }
 
 myEvent.on(EventName.REGISTER_EMAIL, async (data) => {
@@ -27,6 +28,31 @@ myEvent.on(EventName.REGISTER_EMAIL, async (data) => {
             `
         })
         console.log("Register email send event success....")
+    } catch(exception) {
+        // 
+        console.log(exception)
+        process.exit(1);
+    }
+})
+
+myEvent.on(EventName.ACTIVATION_EMAIL, async(data) => {
+    try{
+        await mailsvc.mailSend({
+            to: data.email, 
+            sub: "Account Activated!",
+            message: `
+            Dear ${data.name}, <br/>
+            
+            <p>Your account has been successfully activated. Please <a href="${process.env.FRONTEND_URL}/login">
+                Login
+            </a> to continue.</p>
+
+            <p>Regards,</p>
+            <p>System Administration,</p>
+            <p>${process.env.SMTP_FROM}</p>
+            `
+        })
+        console.log("Activated email send event success....")
     } catch(exception) {
         // 
         console.log(exception)

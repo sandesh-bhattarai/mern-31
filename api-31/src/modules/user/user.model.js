@@ -8,6 +8,9 @@ const UserSchema = new mongoose.Schema({
         max: 50, 
         required: true
     },
+    googleId: String, 
+    facebookId: String, 
+    appleId: String,
     email: {
         type: String, 
         required: true, 

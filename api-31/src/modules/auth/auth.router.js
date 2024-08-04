@@ -12,9 +12,11 @@ authRouter.post('/register', setPath('user/'), uploader.single('image'),  bodyVa
 authRouter.get('/activate/:token', authCtrl.activateRegisteredUser);
 authRouter.get('/re-send/activation/:token', authCtrl.resendToken)
 
-authRouter.get("/me", authCtrl.getLoggedInUser)
-
 authRouter.post('/login',bodyValidator(loginDTO), authCtrl.login)
+
+authRouter.get("/me",  authCtrl.getLoggedInUser)
+
+
 
 authRouter.delete('/logout', authCtrl.logout)
 authRouter.post('/forget-password', authCtrl.forgetPassword)
