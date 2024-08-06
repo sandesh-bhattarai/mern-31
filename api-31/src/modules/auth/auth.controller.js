@@ -30,7 +30,12 @@ class AuthController {
     }
 
     getLoggedInUser =(req, res, next) => {
-        // get loggedInUser's proifle
+        res.json({
+            result: req.authUser, 
+            meta: null, 
+            message: "Logged In User Detail",
+            status: "LOGGED_IN_USER"
+        })
     }
 
     activateRegisteredUser =  async (req, res, next) => {
@@ -117,6 +122,7 @@ class AuthController {
                     }, process.env.JWT_SECRET, {
                         expiresIn: "1 hour"
                     })
+
                     const refreshToken = jwt.sign({
                         sub: user._id,
                         type: "refresh"
@@ -158,15 +164,23 @@ class AuthController {
     forgetPassword = (req, res, next) => {
         // logic 
             // email receive 
-                // validation
-                    // get user 
-                        // reset-token 
-                            // email send client 
-                            // response to client
+                // get user 
+                    // reset-token 
+                        // .. update db user , rnamdomString => resetToken , activeFor
+
+                        // email send client 
+                            // http://localhost:5173/activate/token 
+                            // http://localhost:5173/reset-password/?token=rnadomstring
+                        // response to client
     }
 
     resetPassword =  (req, res, next) => {
-        // password update 
+        // password update
+        // token 
+            // token user fetch 
+                // user.password = bcryp.hashSync(req.body.password, 10) 
+                    // await user.save()
+                // res. success 
     }
 }
 
