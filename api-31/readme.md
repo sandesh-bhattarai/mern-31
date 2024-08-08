@@ -311,3 +311,17 @@ brand
         
 category 
 product
+
+
+banners/
+    _id 
+    name
+    image 
+    link 
+    status 
+    startDate
+    endDate
+    createdBy
+    updatedBy 
+    createdAt
+    updatedAt 
