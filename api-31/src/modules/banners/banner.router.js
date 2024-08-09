@@ -2,7 +2,7 @@ const { loginCheck } = require("../../middleware/auth.middleware");
 const { checkAccess } = require("../../middleware/rbac.middleware");
 const { setPath, uploader } = require("../../middleware/uploader.middleware");
 const { bodyValidator } = require("../../middleware/validator.middleware");
-const { BannerCreateDTO } = require("./banner.contract");
+const { BannerCreateDTO, BannerUpdateDTO } = require("./banner.contract");
 const bannerCtrl = require("./banner.controller");
 
 const bannerRouter = require("express").Router();
@@ -16,7 +16,7 @@ bannerRouter.route('/')
 
 bannerRouter.route("/:id")
     .get(loginCheck, checkAccess('admin'), bannerCtrl.show)
-    .put(loginCheck, checkAccess("admin"),     bannerCtrl.update)
+    .put(loginCheck, checkAccess("admin"), setPath('banners'), uploader.single("image"), bodyValidator(BannerUpdateDTO), bannerCtrl.update)
     .delete(loginCheck, checkAccess('admin'), bannerCtrl.remove)
 
 module.exports = bannerRouter;

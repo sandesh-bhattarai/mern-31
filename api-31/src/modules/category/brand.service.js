@@ -1,18 +1,21 @@
 const Joi = require("joi");
 const { uploadHelper } = require("../../utilities/helpers");
-const BannerModel = require("./banner.model");
+const BrandModel = require("./category.model");
+const slugify = require("slugify");
 
-class BannerService {
+class BrandService {
     transFormData = async (req, isEdit = false) => {
         const data = req.body;
         if(isEdit) {
             data.updatedBy = req.authUser._id;
         } else {
             data.createdBy = req.authUser._id;
+
+            data.slug = slugify(data.name, {lower: true})
         }
 
         if(req.file) {
-            data.image = await uploadHelper(req.file.path, 'banners')
+            data.image = await uploadHelper(req.file.path, 'brands')
         } else {
             if(isEdit) {
                 delete data.image
@@ -21,18 +24,18 @@ class BannerService {
         return data;
     }
 
-    createBanner =async (data) => {
+    createBrand =async (data) => {
         try {
-            const banner = new BannerModel(data);
-            return await banner.save()
+            const brand = new BrandModel(data);
+            return await brand.save()
         } catch(exception) {
             throw exception
         }
     }
 
-    updateBanner =async(data, id) => {
+    updateBrand =async(data, id) => {
         try {
-            const update = await BannerModel.findByIdAndUpdate(id, {$set: data}, {new: true});
+            const update = await BrandModel.findByIdAndUpdate(id, {$set: data}, {new: true});
             return update;
         } catch(exception) {
             throw exception;
@@ -41,9 +44,9 @@ class BannerService {
 
     deleteById = async(id) => {
         try {
-            const update = await BannerModel.findByIdAndDelete(id);
+            const update = await BrandModel.findByIdAndDelete(id);
             if(!update) {
-                throw {code: 404, message: "Banner already deleted or does not exists.", status: "BANNER_DELETE_ERROR"}
+                throw {code: 404, message: "Brand already deleted or does not exists.", status: "BANNER_DELETE_ERROR"}
             }
             return update;
         } catch(exception) {
@@ -53,9 +56,9 @@ class BannerService {
 
     listAllByfilter =async ({limit=15, skip=0, filter={}}) => {
         try {
-            const total = await BannerModel.countDocuments(filter);
+            const total = await BrandModel.countDocuments(filter);
 
-            const list = await BannerModel.find(filter)
+            const list = await BrandModel.find(filter)
                 .populate("createdBy", ["_id", "name", "email", "role"])
                 .populate("updatedBy", ["_id", "name", "email", "role"])
                 .sort({createdAt: "desc"})
@@ -69,15 +72,15 @@ class BannerService {
 
     getSingleData = async(filter) => {
         try{
-            const bannerDetail = await BannerModel.findOne(filter)
+            const brandDetail = await BrandModel.findOne(filter)
                 .populate("createdBy", ["_id", "name", "email", "role"])
                 .populate("updatedBy", ["_id", "name", "email", "role"])
-            return  bannerDetail
+            return  brandDetail
         } catch(exception) {
             throw exception
         }
     }
 }
 
-const bannerSvc = new BannerService()
-module.exports = bannerSvc;
+const brandSvc = new BrandService()
+module.exports = brandSvc;

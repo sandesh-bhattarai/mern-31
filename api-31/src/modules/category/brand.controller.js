@@ -1,9 +1,9 @@
 const { Status } = require("../../config/constants.config");
-const bannerSvc = require("./banner.service")
+const brandSvc = require("./brand.service")
 
-class BannerController{
+class BrandController{
     /**
-     * This function is used to list all the banners available in the system by loggedin Admin user
+     * This function is used to list all the brands available in the system by loggedin Admin user
      * @param {import("express").Request} req 
      * @param {import("express").Response} res 
      * @param {import("express").NextFunction} next 
@@ -28,7 +28,7 @@ class BannerController{
                 }
             }
 
-            const {list, total} = await bannerSvc.listAllByfilter({limit, skip, filter});
+            const {list, total} = await brandSvc.listAllByfilter({limit, skip, filter});
             //
             res.json({
                 result: list, 
@@ -38,7 +38,7 @@ class BannerController{
                     total: total, 
                     totalpages: Math.ceil(total/limit)
                 },
-                message: "List all banners",
+                message: "List all brands",
                 status: "BANNER_LIST_SUCCESS"
             })
         } catch(exception) {
@@ -47,7 +47,7 @@ class BannerController{
     }
 
     /**
-     * This function is to create/store the banner data in database by loggedin Admin user
+     * This function is to create/store the brand data in database by loggedin Admin user
      * @param {import("express").Request} req 
      * @param {import("express").Response} res 
      * @param {import("express").NextFunction} next 
@@ -55,12 +55,12 @@ class BannerController{
      */
     store = async(req, res, next) => {
         try{
-            const data = await bannerSvc.transFormData(req)
-            const banner = await bannerSvc.createBanner(data)
+            const data = await brandSvc.transFormData(req)
+            const brand = await brandSvc.createBrand(data)
             res.json({
-                result: banner, 
+                result: brand, 
                 meta: null, 
-                message: "Banner created successfully.",
+                message: "Brand created successfully.",
                 status: "BANNER_CREATE_SUCCESS"
             })
         } catch(exception) {
@@ -73,7 +73,7 @@ class BannerController{
     }
 
     /**
-     * This function is to get the detail of a banner by loggedin Admin user
+     * This function is to get the detail of a brand by loggedin Admin user
      * @param {import("express").Request} req 
      * @param {import("express").Response} res 
      * @param {import("express").NextFunction} next 
@@ -82,16 +82,16 @@ class BannerController{
     show = async(req, res, next) => {
         try{
             const id = req.params.id; 
-            const banner = await bannerSvc.getSingleData({
+            const brand = await brandSvc.getSingleData({
                 _id: id
             })
-            if(!banner) {
-                throw {code: 404, message: "Banner does not exists", status: "BANNER_NOT_FOUND"}
+            if(!brand) {
+                throw {code: 404, message: "Brand does not exists", status: "BANNER_NOT_FOUND"}
             }
             res.json({
-                result: banner, 
+                result: brand, 
                 meta: null, 
-                message: "Banner Detail",
+                message: "Brand Detail",
                 status: "BANNER_FOUND"
             })
         } catch(exception) {
@@ -100,7 +100,7 @@ class BannerController{
     }
 
     /**
-     * This funciton is to update a banner data by loggedin Admin user
+     * This funciton is to update a brand data by loggedin Admin user
      * @param {import("express").Request} req 
      * @param {import("express").Response} res 
      * @param {import("express").NextFunction} next 
@@ -108,12 +108,12 @@ class BannerController{
      */
     update = async(req, res, next) => {
         try{
-            const data = await bannerSvc.transFormData(req, true)
-            const banner = await bannerSvc.updateBanner(data, req.params.id)
+            const data = await brandSvc.transFormData(req, true)
+            const brand = await brandSvc.updateBrand(data, req.params.id)
             res.json({
-                result: banner, 
+                result: brand, 
                 meta: null, 
-                message: "Banner updated successfully.",
+                message: "Brand updated successfully.",
                 status: "BANNER_UPDATE_SUCCESS"
             })
         } catch(exception) {
@@ -126,7 +126,7 @@ class BannerController{
     }
 
     /**
-     * This funciton is to delete a banner data by loggedin Admin user
+     * This funciton is to delete a brand data by loggedin Admin user
      * @param {import("express").Request} req 
      * @param {import("express").Response} res 
      * @param {import("express").NextFunction} next 
@@ -134,11 +134,11 @@ class BannerController{
      */
     remove = async(req, res, next) => {
         try{
-            const data = await bannerSvc.deleteById(req.params.id)
+            const data = await brandSvc.deleteById(req.params.id)
             res.json({
                 result: data, 
                 meta:null,
-                message: "Banner Deleted Successfully.",
+                message: "Brand Deleted Successfully.",
                 status: "BANNER_DELETE_SUCCESS"
             })
         } catch(exception) {
@@ -148,7 +148,7 @@ class BannerController{
 
     /**
      *
-     * This function fetch the active and available banners to display in the home page. 
+     * This function fetch the active and available brands to display in the home page. 
      * Any User can fetch this data. 
      * @param {import("express").Request} req 
      * @param {import("express").Response} res 
@@ -162,7 +162,7 @@ class BannerController{
                 startDate: {$lte: new Date()},
                 endDate: {$gte: new Date()}
             }
-            const {list} = await bannerSvc.listAllByfilter({
+            const {list} = await brandSvc.listAllByfilter({
                 filter, 
                 limit: 10,
                 skip: 0
@@ -170,7 +170,7 @@ class BannerController{
             res.json({
                 result: list, 
                 meta: null,
-                message: "Banner For Display",
+                message: "Brand For Display",
                 status: "BANNER_FETCHED"
             })
         } catch(exception) {
@@ -180,5 +180,5 @@ class BannerController{
 
 }
 
-const bannerCtrl = new BannerController();
-module.exports = bannerCtrl;
+const brandCtrl = new BrandController();
+module.exports = brandCtrl;
