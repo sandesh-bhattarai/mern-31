@@ -5,13 +5,15 @@ require("./db.config");
 
 const router = require("./router.config");
 const { MulterError } = require("multer");
+const cors = require("cors");
+
 const runUserSeeders = require('../seeders/users.seeders');
 
 runUserSeeders()
 const app = express()
 
 // event middleware
-
+app.use(cors())
 
 // json parsers 
 app.use(express.json());

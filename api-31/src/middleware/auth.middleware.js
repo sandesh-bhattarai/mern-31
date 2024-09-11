@@ -40,8 +40,11 @@ const loginCheck = async (req, res, next) => {
         }
 
     } catch(exception)  {
-        console.log("Jwtexception", exception)
-        next(exception);
+        if(exception instanceof jwt.TokenExpiredError) {
+            next({code: 401,status:"TOKEN_EXPIRED", message: exception.message})
+        } else {
+            next(exception);
+        }
     }
 }
 

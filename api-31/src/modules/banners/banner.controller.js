@@ -1,6 +1,6 @@
 const { Status } = require("../../config/constants.config");
 const bannerSvc = require("./banner.service")
-
+const {fileDelete} = require("../../utilities/helpers")
 class BannerController{
     /**
      * This function is used to list all the banners available in the system by loggedin Admin user
