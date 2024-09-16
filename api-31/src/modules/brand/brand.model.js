@@ -19,6 +19,7 @@ const BrandSchema = new mongoose.Schema({
         default: "inactie"
     },
     image: String,
+    description: String,
     createdBy: {
         type: mongoose.Types.ObjectId,
         ref: "User",

@@ -1,6 +1,6 @@
 const { Status } = require("../../config/constants.config");
 const brandSvc = require("./brand.service")
-
+const {fileDelete} = require("../../utilities/helpers");
 class BrandController{
     /**
      * This function is used to list all the brands available in the system by loggedin Admin user
